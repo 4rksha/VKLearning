@@ -1,0 +1,137 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Source Files\ThirdParty">
+      <UniqueIdentifier>{7c78f7fc-fa22-4c14-bd3f-bb4045315e6d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\ThirdParty\imgui">
+      <UniqueIdentifier>{c0162fc0-aaae-4344-b5c3-f8b9d7cf5458}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\ThirdParty\VkBootStrap">
+      <UniqueIdentifier>{d8133895-0718-4ca6-92cd-697031d917b1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Shaders">
+      <UniqueIdentifier>{32cedb5b-25ca-49a4-b452-996d3e6dd200}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="camera.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="vk_engine.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="vk_initializers.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="vk_mesh.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="vk_pipeline.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="vk_textures.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="vk_types.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="vk_ui.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="vk_utils.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="vk_descriptors.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="camera.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="vk_engine.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="vk_initializers.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="vk_mesh.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="vk_pipeline.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="vk_textures.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ThirdParty\imgui\imgui.cpp">
+      <Filter>Source Files\ThirdParty\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ThirdParty\imgui\imgui_demo.cpp">
+      <Filter>Source Files\ThirdParty\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ThirdParty\imgui\imgui_draw.cpp">
+      <Filter>Source Files\ThirdParty\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ThirdParty\imgui\imgui_impl_sdl.cpp">
+      <Filter>Source Files\ThirdParty\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ThirdParty\imgui\imgui_impl_vulkan.cpp">
+      <Filter>Source Files\ThirdParty\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ThirdParty\imgui\imgui_tables.cpp">
+      <Filter>Source Files\ThirdParty\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ThirdParty\imgui\imgui_widgets.cpp">
+      <Filter>Source Files\ThirdParty\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ThirdParty\vkbootstrap\VkBootstrap.cpp">
+      <Filter>Source Files\ThirdParty\VkBootStrap</Filter>
+    </ClCompile>
+    <ClCompile Include="vk_ui.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="vk_descriptors.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Shaders\textured_lit.frag">
+      <Filter>Source Files\Shaders</Filter>
+    </None>
+    <None Include="Shaders\tri_mesh.frag">
+      <Filter>Source Files\Shaders</Filter>
+    </None>
+    <None Include="Shaders\tri_mesh.vert">
+      <Filter>Source Files\Shaders</Filter>
+    </None>
+    <None Include="Shaders\triangle.frag">
+      <Filter>Source Files\Shaders</Filter>
+    </None>
+    <None Include="Shaders\triangle.vert">
+      <Filter>Source Files\Shaders</Filter>
+    </None>
+    <None Include="Shaders\triangle_color.frag">
+      <Filter>Source Files\Shaders</Filter>
+    </None>
+    <None Include="Shaders\triangle_color.vert">
+      <Filter>Source Files\Shaders</Filter>
+    </None>
+  </ItemGroup>
+</Project>

@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="camera.h" />
+    <ClInclude Include="vk_descriptors.h" />
+    <ClInclude Include="vk_ui.h" />
+    <ClInclude Include="vk_engine.h" />
+    <ClInclude Include="vk_initializers.h" />
+    <ClInclude Include="vk_mesh.h" />
+    <ClInclude Include="vk_pipeline.h" />
+    <ClInclude Include="vk_textures.h" />
+    <ClInclude Include="vk_types.h" />
+    <ClInclude Include="vk_utils.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\ThirdParty\imgui\imgui.cpp" />
+    <ClCompile Include="..\ThirdParty\imgui\imgui_demo.cpp" />
+    <ClCompile Include="..\ThirdParty\imgui\imgui_draw.cpp" />
+    <ClCompile Include="..\ThirdParty\imgui\imgui_impl_sdl.cpp" />
+    <ClCompile Include="..\ThirdParty\imgui\imgui_impl_vulkan.cpp" />
+    <ClCompile Include="..\ThirdParty\imgui\imgui_tables.cpp" />
+    <ClCompile Include="..\ThirdParty\imgui\imgui_widgets.cpp" />
+    <ClCompile Include="..\ThirdParty\vkbootstrap\VkBootstrap.cpp" />
+    <ClCompile Include="camera.cpp" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="vk_descriptors.cpp" />
+    <ClCompile Include="vk_ui.cpp" />
+    <ClCompile Include="vk_engine.cpp" />
+    <ClCompile Include="vk_initializers.cpp" />
+    <ClCompile Include="vk_mesh.cpp" />
+    <ClCompile Include="vk_pipeline.cpp" />
+    <ClCompile Include="vk_textures.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Shaders\textured_lit.frag" />
+    <None Include="Shaders\triangle.frag" />
+    <None Include="Shaders\triangle.vert" />
+    <None Include="Shaders\triangle_color.frag" />
+    <None Include="Shaders\triangle_color.vert" />
+    <None Include="Shaders\tri_mesh.frag" />
+    <None Include="Shaders\tri_mesh.vert" />
+  </ItemGroup>
+  <ItemGroup>
+    <UpToDateCheckInput Include="Shaders\textured_lit.frag" />
+    <UpToDateCheckInput Include="Shaders\triangle.frag" />
+    <UpToDateCheckInput Include="Shaders\triangle.vert" />
+    <UpToDateCheckInput Include="Shaders\triangle_color.frag" />
+    <UpToDateCheckInput Include="Shaders\triangle_color.vert" />
+    <UpToDateCheckInput Include="Shaders\tri_mesh.frag" />
+    <UpToDateCheckInput Include="Shaders\tri_mesh.vert" />
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <VCProjectVersion>16.0</VCProjectVersion>
+    <Keyword>Win32Proj</Keyword>
+    <ProjectGuid>{3c217eef-9416-4431-9482-47c79a9c2519}</ProjectGuid>
+    <RootNamespace>VKLearning</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v142</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v142</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v142</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v142</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="Shared">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <LinkIncremental>true</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <LinkIncremental>true</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>F:\Projets\Rendering\004 - VKLearning\VKLearning\ThirdParty\stb_image;F:\Projets\Rendering\004 - VKLearning\VKLearning\ThirdParty\tinyobjloader;F:\Projets\Rendering\004 - VKLearning\VKLearning\ThirdParty\vma;F:\Projets\Rendering\004 - VKLearning\VKLearning\ThirdParty\vkbootstrap;F:\Projets\Rendering\004 - VKLearning\VKLearning\ThirdParty\imgui;C:\VulkanSDK\1.2.198.1\Include;F:\Projets\Rendering\004 - VKLearning\VKLearning\ThirdParty\glm;F:\Projets\Rendering\004 - VKLearning\VKLearning\ThirdParty\SDL2\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>F:\Projets\Rendering\004 - VKLearning\VKLearning\ThirdParty\SDL2\lib\x86;C:\VulkanSDK\1.2.198.1\Lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>vulkan-1.lib;SDL2.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>F:\Projets\Rendering\004 - VKLearning\VKLearning\ThirdParty\stb_image;F:\Projets\Rendering\004 - VKLearning\VKLearning\ThirdParty\tinyobjloader;F:\Projets\Rendering\004 - VKLearning\VKLearning\ThirdParty\vma;F:\Projets\Rendering\004 - VKLearning\VKLearning\ThirdParty\vkbootstrap;F:\Projets\Rendering\004 - VKLearning\VKLearning\ThirdParty\imgui;C:\VulkanSDK\1.2.198.1\Include;F:\Projets\Rendering\004 - VKLearning\VKLearning\ThirdParty\glm;F:\Projets\Rendering\004 - VKLearning\VKLearning\ThirdParty\SDL2\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>F:\Projets\Rendering\004 - VKLearning\VKLearning\ThirdParty\SDL2\lib\x86;C:\VulkanSDK\1.2.198.1\Lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>vulkan-1.lib;SDL2.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>F:\Projets\Rendering\004 - VKLearning\VKLearning\ThirdParty\tinygltf;F:\Projets\Rendering\004 - VKLearning\VKLearning\ThirdParty\stb_image;F:\Projets\Rendering\004 - VKLearning\VKLearning\ThirdParty\tinyobjloader;F:\Projets\Rendering\004 - VKLearning\VKLearning\ThirdParty\vma;F:\Projets\Rendering\004 - VKLearning\VKLearning\ThirdParty\vkbootstrap;F:\Projets\Rendering\004 - VKLearning\VKLearning\ThirdParty\imgui;C:\VulkanSDK\1.2.198.1\Include;F:\Projets\Rendering\004 - VKLearning\VKLearning\ThirdParty\glm;F:\Projets\Rendering\004 - VKLearning\VKLearning\ThirdParty\SDL2\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>F:\Projets\Rendering\004 - VKLearning\VKLearning\ThirdParty\SDL2\lib\x64;C:\VulkanSDK\1.2.198.1\Lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>vulkan-1.lib;SDL2.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+    <PreBuildEvent>
+      <Command>compile_shaders.bat</Command>
+    </PreBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>F:\Projets\Rendering\004 - VKLearning\VKLearning\ThirdParty\tinygltf;F:\Projets\Rendering\004 - VKLearning\VKLearning\ThirdParty\stb_image;F:\Projets\Rendering\004 - VKLearning\VKLearning\ThirdParty\tinyobjloader;F:\Projets\Rendering\004 - VKLearning\VKLearning\ThirdParty\vma;F:\Projets\Rendering\004 - VKLearning\VKLearning\ThirdParty\vkbootstrap;F:\Projets\Rendering\004 - VKLearning\VKLearning\ThirdParty\imgui;C:\VulkanSDK\1.2.198.1\Include;F:\Projets\Rendering\004 - VKLearning\VKLearning\ThirdParty\glm;F:\Projets\Rendering\004 - VKLearning\VKLearning\ThirdParty\SDL2\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>F:\Projets\Rendering\004 - VKLearning\VKLearning\ThirdParty\SDL2\lib\x64;C:\VulkanSDK\1.2.198.1\Lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>vulkan-1.lib;SDL2.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+    <PreBuildEvent>
+      <Command>compile_shaders.bat</Command>
+    </PreBuildEvent>
+  </ItemDefinitionGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
