@@ -112,26 +112,12 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Shaders\textured_lit.frag">
-      <Filter>Source Files\Shaders</Filter>
-    </None>
     <None Include="Shaders\tri_mesh.frag">
       <Filter>Source Files\Shaders</Filter>
     </None>
     <None Include="Shaders\tri_mesh.vert">
       <Filter>Source Files\Shaders</Filter>
     </None>
-    <None Include="Shaders\triangle.frag">
-      <Filter>Source Files\Shaders</Filter>
-    </None>
-    <None Include="Shaders\triangle.vert">
-      <Filter>Source Files\Shaders</Filter>
-    </None>
-    <None Include="Shaders\triangle_color.frag">
-      <Filter>Source Files\Shaders</Filter>
-    </None>
-    <None Include="Shaders\triangle_color.vert">
-      <Filter>Source Files\Shaders</Filter>
-    </None>
+    <None Include="ClassDiagram.cd" />
   </ItemGroup>
 </Project>

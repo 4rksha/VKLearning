@@ -1,8 +1,9 @@
 #include <iostream>
 #include "vk_ui.h"
 #include "vk_utils.h"
+#include "string"
 
-void VulkanUI::init(VulkanEngine *engine)
+void VulkanUI::init(VulkanEngine* engine)
 {
 	//1: create descriptor pool for IMGUI
 	// the size of the pool is very oversize, but it's copied from imgui demo itself.
@@ -52,7 +53,6 @@ void VulkanUI::init(VulkanEngine *engine)
 	initInfo.MSAASamples = VK_SAMPLE_COUNT_1_BIT;
 
 	ImGui_ImplVulkan_Init(&initInfo, engine->m_renderPass);
-
 	//execute a gpu command to upload imgui font textures
 	engine->immediateSubmit([&](const VkCommandBuffer& cmd) {
 		ImGui_ImplVulkan_CreateFontsTexture(cmd);
@@ -69,147 +69,81 @@ void VulkanUI::init(VulkanEngine *engine)
 		});
 }
 
-void VulkanUI::updateImGui(VulkanEngine * engine)
+void VulkanUI::updateImGui(VulkanEngine* engine)
 {
 	//imgui new frame
 	ImGui_ImplVulkan_NewFrame();
 	ImGui_ImplSDL2_NewFrame(engine->m_window);
 
 	ImGui::NewFrame();
-
-	//imgui commands
 	//ImGui::ShowDemoWindow();
 	appMainMenuBar();
-    overlay(engine->m_fps);
+	leftPanel(engine);
 }
 
 void VulkanUI::appMainMenuBar()
 {
-    if (ImGui::BeginMainMenuBar())
-    {
-        if (ImGui::BeginMenu("File"))
-        {
-            menuFile();
-            ImGui::EndMenu();
-        }
-        if (ImGui::BeginMenu("Edit"))
-        {
-            if (ImGui::MenuItem("Undo", "CTRL+Z")) {}
-            if (ImGui::MenuItem("Redo", "CTRL+Y", false, false)) {}  // Disabled item
-            ImGui::Separator();
-            if (ImGui::MenuItem("Cut", "CTRL+X")) {}
-            if (ImGui::MenuItem("Copy", "CTRL+C")) {}
-            if (ImGui::MenuItem("Paste", "CTRL+V")) {}
-            ImGui::EndMenu();
-        }
-        ImGui::EndMainMenuBar();
-    }
+	if (ImGui::BeginMainMenuBar())
+	{
+		if (ImGui::BeginMenu("File"))
+		{
+			ImGui::EndMenu();
+		}
+		if (ImGui::BeginMenu("Edit"))
+		{
+			ImGui::EndMenu();
+		}
+		ImGui::EndMainMenuBar();
+	}
 }
 
-void VulkanUI::menuFile()
+void VulkanUI::bottomInfo(VulkanEngine* engine)
 {
-    ImGui::MenuItem("(demo menu)", NULL, false, false);
-    if (ImGui::MenuItem("New")) {}
-    if (ImGui::MenuItem("Open", "Ctrl+O")) {}
-    if (ImGui::BeginMenu("Open Recent"))
-    {
-        ImGui::MenuItem("fish_hat.c");
-        ImGui::MenuItem("fish_hat.inl");
-        ImGui::MenuItem("fish_hat.h");
-        if (ImGui::BeginMenu("More.."))
-        {
-            ImGui::MenuItem("Hello");
-            ImGui::MenuItem("Sailor");
-            if (ImGui::BeginMenu("Recurse.."))
-            {
-                ImGui::EndMenu();
-            }
-            ImGui::EndMenu();
-        }
-        ImGui::EndMenu();
-    }
-    if (ImGui::MenuItem("Save", "Ctrl+S")) {}
-    if (ImGui::MenuItem("Save As..")) {}
-
-    ImGui::Separator();
-    if (ImGui::BeginMenu("Options"))
-    {
-        static bool enabled = true;
-        ImGui::MenuItem("Enabled", "", &enabled);
-        ImGui::BeginChild("child", ImVec2(0, 60), true);
-        for (int i = 0; i < 10; i++)
-            ImGui::Text("Scrolling Text %d", i);
-        ImGui::EndChild();
-        static float f = 0.5f;
-        static int n = 0;
-        ImGui::SliderFloat("Value", &f, 0.0f, 1.0f);
-        ImGui::InputFloat("Input", &f, 0.1f);
-        ImGui::Combo("Combo", &n, "Yes\0No\0Maybe\0\0");
-        ImGui::EndMenu();
-    }
-
-    if (ImGui::BeginMenu("Colors"))
-    {
-        float sz = ImGui::GetTextLineHeight();
-        for (int i = 0; i < ImGuiCol_COUNT; i++)
-        {
-            const char* name = ImGui::GetStyleColorName((ImGuiCol)i);
-            ImVec2 p = ImGui::GetCursorScreenPos();
-            ImGui::GetWindowDrawList()->AddRectFilled(p, ImVec2(p.x + sz, p.y + sz), ImGui::GetColorU32((ImGuiCol)i));
-            ImGui::Dummy(ImVec2(sz, sz));
-            ImGui::SameLine();
-            ImGui::MenuItem(name);
-        }
-        ImGui::EndMenu();
-    }
-
-    // Here we demonstrate appending again to the "Options" menu (which we already created above)
-    // Of course in this demo it is a little bit silly that this function calls BeginMenu("Options") twice.
-    // In a real code-base using it would make senses to use this feature from very different code locations.
-    if (ImGui::BeginMenu("Options")) // <-- Append!
-    {
-        static bool b = true;
-        ImGui::Checkbox("SomeOption", &b);
-        ImGui::EndMenu();
-    }
-
-    if (ImGui::BeginMenu("Disabled", false)) // Disabled
-    {
-        IM_ASSERT(0);
-    }
-    if (ImGui::MenuItem("Checked", NULL, true)) {}
-    if (ImGui::MenuItem("Quit", "Alt+F4")) {}
-
+	ImGui::Text("GPU + CPU : %3.1f ms, %3.1f fps", engine->getMeanDeltaTime(), 1000.f / engine->getMeanDeltaTime());
+	ImGui::Separator();
 }
 
-void VulkanUI::overlay(const double fps)
+void VulkanUI::leftPanel(VulkanEngine* engine)
 {
-    static int corner = 0;
-    ImGuiIO& io = ImGui::GetIO();
-    ImGuiWindowFlags window_flags = ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_NoFocusOnAppearing | ImGuiWindowFlags_NoNav;
-    if (corner != -1)
-    {
-        const float PAD = 5.f;
-        const ImGuiViewport* viewport = ImGui::GetMainViewport();
-        ImVec2 work_pos = viewport->WorkPos; // Use work area to avoid menu-bar/task-bar, if any!
-        ImVec2 work_size = viewport->WorkSize;
-        ImVec2 window_pos, window_pos_pivot;
-        window_pos.x = work_pos.x + PAD;
-        window_pos.y = work_pos.y + work_size.y - PAD;
-        window_pos_pivot.x = 0.0f;
-        window_pos_pivot.y = 1.0f;
-        ImGui::SetNextWindowPos(window_pos, ImGuiCond_Always, window_pos_pivot);
-        window_flags |= ImGuiWindowFlags_NoMove;
-    }
-    ImGui::SetNextWindowBgAlpha(0.35f); // Transparent background
-    if (ImGui::Begin("Example: Simple overlay", nullptr, window_flags))
-    {
-        ImGui::Text("Fps: %3.2f", fps);
-        ImGui::Separator();
-        if (ImGui::IsMousePosValid())
-            ImGui::Text("Mouse Position: (%.1f,%.1f)", io.MousePos.x, io.MousePos.y);
-        else
-            ImGui::Text("Mouse Position: <invalid>");
-    }
-    ImGui::End();
+	const ImGuiWindowFlags window_flags = ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_NoCollapse;
+
+	const ImGuiViewport* viewport = ImGui::GetMainViewport();
+	const ImVec2 work_pos = viewport->WorkPos; // Use work area to avoid menu-bar/task-bar, if any!
+	const ImVec2 work_size = viewport->WorkSize;
+	ImVec2 window_pos, window_size;
+	window_size.x = work_size.x / 5.f;
+	window_size.y = work_size.y;
+
+	ImGui::SetNextWindowPos(work_pos);
+	ImGui::SetNextWindowSize(window_size);
+	ImGui::SetNextWindowBgAlpha(1.f); // Transparent background
+	 
+	if (ImGui::Begin("LeftPanel", nullptr, window_flags))
+	{
+		bottomInfo(engine);
+		ImGui::Separator();
+		ImGui::Text("GGX Params");
+		GPUSceneData *params = &engine->m_sceneParameters;
+		ImGui::DragFloat3("albedo", &(params->albedo[0]),0.01f, 0.0f, 1.0f, "%.3f");
+		ImGui::DragFloat("metallic", &(params->metallic),0.01f, 0.0f, 1.0f, "%.3f");
+		ImGui::DragFloat("roughness", &(params->roughness),0.01f, 0.0f, 1.0f, "%.3f");
+		ImGui::DragInt("light number", &(params->lightNb),1, 1, 1000, "%.3f");
+		for (int i = 0; i < params->lightNb; ++i)
+		{
+			ImGui::Separator();
+			std::string label0 = "Light" + std::to_string(i);
+			ImGui::Text(label0.c_str());
+
+			std::string label1 = "position" + std::to_string(i);
+			ImGui::DragFloat3(label1.c_str(), &(engine->m_lightData[i].position[0]));
+
+			std::string label2 = "intensity" + std::to_string(i);
+			ImGui::DragFloat(label2.c_str(), &(engine->m_lightData[i].intensity),0.01f, 0.f, 100.f, "%.2f");
+
+			std::string label3 = "color" + std::to_string(i);
+			ImGui::DragFloat3(label3.c_str(), &(engine->m_lightData[i].color[0]), 0.01f, 0.f, 1.f);
+		}
+
+	}
+	ImGui::End();
 }

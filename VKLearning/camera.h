@@ -8,25 +8,49 @@
 #include <SDL_events.h>
 #include <glm/glm.hpp>
 
+enum CameraMovement {
+	FORWARD,
+	BACKWARD,
+	LEFT,
+	RIGHT
+};
 
-struct Camera {
-	glm::vec3 position;
-	glm::vec3 velocity;
-	glm::vec3 inputAxis;
+// Default camera values
+constexpr float YAW = -90.0f;
+constexpr float PITCH = 0.0f;
+constexpr float SPEED = 2.5f;
+constexpr float SENSITIVITY = 0.1f;
+constexpr float ZOOM = 45.0f;
 
-	float speed = 0.000002f;
-	float accel = 0.00001f;
+class Camera
+{
+public:
+	void processKeyboard(CameraMovement direction, float deltaTime);
+	void processMouseMovement(float xoffset, float yoffset, bool constrainPitch = true);
+	void processMouseScroll(float yoffset);
 
-	float pitch{ 0 }; //up-down rotation
-	float yaw{ 0 }; //left-right rotation
+	glm::mat4 getViewMatrix() const;
+	glm::mat4 getProjectionMatrix(const float aspectRatio) const;
 
-	bool bSprint = false;
-	bool bLocked;
+	void setPosition(const glm::vec3 _position) { m_position = _position; }
+	glm::vec3 getPosition() const { return m_position; }
+	glm::vec3 getFront() const { return m_front; }
 
-	void processInputEvent(const SDL_Event* ev);
-	void updateCamera(float deltaSeconds);
+private:
+	void updateCameraVectors();
 
-	glm::mat4 getViewMatrix();
-	glm::mat4 getProjectionMatrix(bool bReverse = true);
-	glm::mat4 getRotationMatrix();
+	glm::vec3 m_position{ glm::vec3(0.0f, 0.0f, 3.0f) };
+	glm::vec3 m_front{ glm::vec3(0.0f, 0.0f, -1.0f) };
+	glm::vec3 m_up{ glm::vec3(0.0f, 1.0f, 0.0f) };
+	glm::vec3 m_right{ glm::vec3(1.0f, 0.0f, 0.0f) };
+	glm::vec3 m_worldUp{ glm::vec3(0.0f, 1.0f, 0.0f) };
+
+	// euler Angles
+	float m_yaw = YAW;
+	float m_pitch = PITCH;
+	// camera options
+	float m_movementSpeed = SPEED;
+	float m_sensitivity = SENSITIVITY;
+	float m_zoom = ZOOM;
+
 };

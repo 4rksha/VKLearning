@@ -5,95 +5,16 @@
 
 #include "vk_types.h"
 #include <vector>
-#include <functional>
-#include <deque>
-#include <unordered_map>
+#include <array>
 
 #include "camera.h"
 
-#include "vk_mem_alloc.h"
 #include "vk_mesh.h"
 
-struct DeletionQueue
-{
-	std::deque<std::function<void()>> deletors;
 
-	void push_function(std::function<void()>&& function) {
-		deletors.push_back(function);
-	}
-
-	void flush() {
-		// reverse iterate the deletion queue to execute all the functions
-		for (auto it = deletors.rbegin(); it != deletors.rend(); it++) {
-			(*it)(); //call the function
-		}
-
-		deletors.clear();
-	}
-};
-
-struct MeshPushConstants
-{
-	glm::mat4 renderMatrix;
-};
-
-struct Material
-{
-	VkDescriptorSet textureSet{ VK_NULL_HANDLE }; 
-	VkPipeline pipeline{};
-	VkPipelineLayout pipelineLayout{};
-};
-
-struct RenderObject
-{
-	Mesh* mesh = nullptr;
-	Material* material = nullptr;
-	glm::mat4 transformMatrix{};
-};
-
-struct GPUCameraData {
-	glm::mat4 view{};
-	glm::mat4 proj{};
-	glm::mat4 viewproj{};
-};
-
-struct GPUSceneData {
-	glm::vec4 fogColor; // w is for exponent
-	glm::vec4 fogDistances; //x for min, y for max, zw unused.
-	glm::vec4 ambientColor;
-	glm::vec4 sunlightDirection; //w for sun power
-	glm::vec4 sunlightColor;
-};
-
-struct UploadContext {
-	VkFence uploadFence;
-	VkCommandPool commandPool;
-	VkCommandBuffer commandBuffer;
-};
-
-struct FrameData {
-	VkSemaphore presentSemaphore, renderSemaphore;
-	VkFence renderFence;
-
-	VkCommandPool commandPool;
-	VkCommandBuffer mainCommandBuffer;
-
-	AllocatedBuffer cameraBuffer;
-	VkDescriptorSet globalDescriptor;
-
-	AllocatedBuffer objectBuffer;
-	VkDescriptorSet objectDescriptor;
-};
-
-struct GPUObjectData {
-	glm::mat4 modelMatrix;
-};
-
-struct Texture 
-{
-	AllocatedImage image;
-	VkImageView imageView;
-};
+constexpr uint32_t WIDTH = 1280;
+constexpr uint32_t HEIGHT = 720;
+constexpr float ASPECT_RATIO = static_cast<float>(WIDTH) / static_cast<float>(HEIGHT);
 
 constexpr uint64_t FRAME_OVERLAP = 2;
 
@@ -106,8 +27,8 @@ public:
 	void run();
 	void draw();
 
-	VkExtent2D		   m_windowExtent{ 1920 , 1080 };
-	struct SDL_Window* m_window{ nullptr };
+	VkExtent2D	m_windowExtent{ WIDTH , HEIGHT };
+	SDL_Window* m_window{ nullptr };
 
 public:
 	void initVulkan();
@@ -132,15 +53,21 @@ public:
 	Material* createMaterial(VkPipeline pipeline, VkPipelineLayout layout, const std::string& name);
 	Material* getMaterial(const std::string& name);
 	Mesh* getMesh(const std::string& name);
-	void drawObjects(VkCommandBuffer cmd, RenderObject* first, const size_t count);
+	void drawObjects(VkCommandBuffer cmd, const RenderObject* first, const size_t count);
 
-	[[nodiscard]] AllocatedBuffer createBuffer(const size_t allocSize, VkBufferUsageFlags usage, VmaMemoryUsage memoryUsage) const;
-
-	[[nodiscard]] VkDeviceSize padUniformBufferSize(size_t originalSize) const;
+	AllocatedBuffer createBuffer(const size_t allocSize, VkBufferUsageFlags usage, VmaMemoryUsage memoryUsage) const;
+	VkDeviceSize padUniformBufferSize(size_t originalSize) const;
 
 	void immediateSubmit(std::function<void(VkCommandBuffer cmd)>&& function) const;
 
 	void loadImages();
+
+	bool processInput(const SDL_Event* e);
+	bool processKeyboard(const SDL_Event* e);
+	void processMouse(const SDL_Event* e);
+
+	float getMeanDeltaTime() const;
+	const Camera& getCamera() const { return m_camera;}
 
 
 public:
@@ -177,6 +104,7 @@ public:
 	VkDescriptorPool	  m_descriptorPool;
 	VkDescriptorSetLayout m_globalSetLayout;
 	VkDescriptorSetLayout m_objectSetLayout;
+	VkDescriptorSetLayout m_lightSetLayout;
 
 	std::unordered_map<std::string, Material> m_materials;
 	std::unordered_map<std::string, Mesh>     m_meshes;
@@ -188,7 +116,7 @@ public:
 
 	UploadContext m_uploadContext;
 
-	VkDescriptorSetLayout					 m_singleTextureSetLayout;
+	VkDescriptorSetLayout					 m_bindlessTextureSetLayout;
 	std::unordered_map<std::string, Texture> m_loadedTextures;
 
 	bool m_isInitialized{ false };
@@ -196,6 +124,10 @@ public:
 
 	Camera m_camera{};
 
-	double m_fps{ 0 };
+	float deltaTime{ 0 };
+
+	std::deque<float> lastDeltaTimes{};
+
+	std::array<GPULightData, 1000> m_lightData;
 };
 

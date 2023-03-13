@@ -17,8 +17,8 @@ public:
 	static void updateImGui(VulkanEngine* engine);
 
 	static void appMainMenuBar();
-	static void menuFile();
-	static void overlay(const double fps);
+	static void bottomInfo(VulkanEngine* engine);
+	static void leftPanel(VulkanEngine* engine);
 private:
 	
 };

@@ -71,33 +71,36 @@ bool Mesh::loadFromObj(const char* filename)
 	}
 
 	// Loop over shapes
-	for (size_t s = 0; s < shapes.size(); s++) {
+	for (auto &shape : shapes) {
 		// Loop over faces(polygon)
 		size_t index_offset = 0;
-		for (size_t f = 0; f < shapes[s].mesh.num_face_vertices.size(); f++) {
+		for (size_t f = 0; f < shape.mesh.num_face_vertices.size(); f++) {
 
 			//hardcode loading to triangles
 			int fv = 3;
-			int mat_index = shapes[s].mesh.material_ids[f];
+			int mat_index = shape.mesh.material_ids[f];
 			// Loop over vertices in the face.
 			for (size_t v = 0; v < fv; v++) {
+
 				// access to vertex
-				tinyobj::index_t idx = shapes[s].mesh.indices[index_offset + v];
+				tinyobj::index_t idx = shape.mesh.indices[index_offset + v];
 
 				//vertex position
 				int index = 3 * idx.vertex_index;
 				tinyobj::real_t vx = attrib.vertices[index];
-				tinyobj::real_t vy = attrib.vertices[index + 1];
-				tinyobj::real_t vz = attrib.vertices[index + 2];
+				tinyobj::real_t vy = attrib.vertices[1 + index];
+				tinyobj::real_t vz = attrib.vertices[2 + index];
+
 				//vertex normal
 				index = 3 * idx.normal_index;
 				tinyobj::real_t nx = attrib.normals[index];
-				tinyobj::real_t ny = attrib.normals[index + 1];
-				tinyobj::real_t nz = attrib.normals[index + 2];
+				tinyobj::real_t ny = attrib.normals[1 + index];
+				tinyobj::real_t nz = attrib.normals[2 + index];
+
 				//vertex uv
 				index = 2 * idx.texcoord_index;
 				tinyobj::real_t ux = attrib.texcoords[index];
-				tinyobj::real_t uy = attrib.texcoords[index + 1];
+				tinyobj::real_t uy = attrib.texcoords[1 + index];
 
 
 				//copy it into our vertex

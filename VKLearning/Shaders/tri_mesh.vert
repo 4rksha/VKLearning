@@ -9,6 +9,8 @@ layout (location = 0) out vec3 outPosition;
 layout (location = 1) out vec3 outNormal;
 layout (location = 2) out vec4 outColor;
 layout (location = 3) out vec2 outTexCoord;
+layout (location = 4) out vec3 outWorldPosition;
+
 
 
 layout(set = 0, binding = 0) uniform  CameraBuffer
@@ -16,6 +18,7 @@ layout(set = 0, binding = 0) uniform  CameraBuffer
 	mat4 view;
 	mat4 proj;
 	mat4 viewproj;
+	vec4 cameraPosition;
 } cameraData;
 
 struct ObjectData{
@@ -45,4 +48,5 @@ void main()
 	outColor = vColor;
 	outNormal = vNormal;
 	outTexCoord = vTexCoord;
+	outWorldPosition = vPosition;
 }

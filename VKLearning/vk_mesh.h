@@ -34,3 +34,9 @@ public:
     AllocatedBuffer m_vertexBuffer;
 };
 
+struct RenderObject
+{
+	Mesh* mesh = nullptr;
+	Material* material = nullptr;
+	glm::mat4 transformMatrix{};
+};
